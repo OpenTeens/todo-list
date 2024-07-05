@@ -3,6 +3,10 @@ body {
     background-color: var(--bgcolor);
 }
 
+.noselect {
+    user-select: none;
+}
+
 #todoTable>h2 {
     user-select: none;
 }

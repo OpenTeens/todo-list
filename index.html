@@ -41,6 +41,15 @@
 	<div id="addtask" class="floatingBtn" onclick="show_window('addtask');">+</div>
 
 	<script>
+		function $(q) {
+			return document.querySelector(q);
+		}
+		function $$(q) {
+			return document.querySelectorAll(q);
+		}
+	</script>
+
+	<script>
 		/* init */
 		const VERSION = 2.0;
 		localStorage.todolist_v = VERSION;
@@ -270,6 +279,19 @@
 			})
 		}
 
+		function edit_detail(id) {
+			show_window('editdetail');
+
+			var todo = notebook.incompleted.find(todo => todo.id == id) || notebook.completed.find(todo => todo.id == id);
+
+			$("#window_editdetail_id").value = id;
+			$("#window_editdetail_title").value = todo.title;
+			$("#window_editdetail_content").value = todo.content;
+			$("#window_editdetail_ddl").value = todo.ddl;
+			$("#window_editdetail_manager").value = todo.manager;
+			$("#window_editdetail_reviewer").value = todo.reviewer;
+		}
+
 		function redraw(part) {
 			function _tab() {
 				tab.innerHTML = "";
@@ -339,7 +361,7 @@
 			var html = `
 				<div class="task ${className}">
 					<div class="left-control" style="background: ${color} !important">
-						<div class="task-control" onclick="task_${className}('${id}')">
+						<div class="task-control" onclick="task_${className}(${id})">
 							<div class="svg-icon ${className}"><svg xmlns="http://www.w3.org/2000/svg"
 									viewBox="0 0 16 16">
 									<path
@@ -350,7 +372,7 @@
 					</div>
 					<div class="task-content">
 						<div class="justify-content-between">
-							<h3 class="task-title">
+							<h3 class="task-title" onclick="edit_detail(${id})">
 								<p>${content}</p>
 							</h3>
 						</div>
@@ -368,11 +390,7 @@
 
 		window.onload = function () {
 			// close all windows.
-			windows = [
-				window_addtask,
-				window_import,
-				window_export,
-			]
+			windows = $$(".window.container");
 			close_window();
 		}
 	</script>
@@ -593,6 +611,70 @@
 				var ex_data = "2B" + JSON.stringify(todolist);
 				// json data
 				window_export_data.value = ex_data;
+			}
+		</script>
+	</div>
+	<div id="window_editdetail" class="window container">
+		<div class="window content">
+			<center>
+				<h1>Edit Detail</h1>
+			</center>
+			<input type="hidden" id="window_editdetail_id" />
+			<span class="noselect">Title:</span>
+			<input type="text" id="window_editdetail_title" />
+			<br>
+			<span class="noselect">Content:</span>
+			<textarea id="window_editdetail_content"></textarea>
+			<br>
+			<span class="noselect">DDL:</span>
+			<input type="date" id="window_editdetail_ddl" />
+			<br>
+			<span class="noselect">Manager:</span>
+			<input type="text" id="window_editdetail_manager" />
+			<br>
+			<span class="noselect">Reviewer:</span>
+			<input type="text" id="window_editdetail_reviewer" />
+			<div onclick="close_window('editdetail')" class="floatingBtn" style="top: 50px;">×</div>
+			<div onclick="window_editdetail_submit()" class="floatingBtn">√</div>
+		</div>
+
+		<script>
+			init_window.editdetail = function () {
+				window_editdetail_title.value = '';
+				window_editdetail_content.value = '';
+				window_editdetail_ddl.value = '';
+				window_editdetail_manager.value = '';
+				window_editdetail_reviewer.value = '';
+			}
+
+			function window_editdetail_submit() {
+				var id = Number(window_editdetail_id.value);
+
+				var title = window_editdetail_title.value;
+				var content = window_editdetail_content.value;
+				var ddl = window_editdetail_ddl.value;
+				var manager = window_editdetail_manager.value;
+				var reviewer = window_editdetail_reviewer.value;
+
+				sync('modify', {
+					"id": id,
+					"update": {
+						"title": title,
+						"content": content,
+						"ddl": ddl,
+						"manager": manager,
+						"reviewer": reviewer
+					}
+				})
+				var todo = notebook.incompleted.find(todo => todo.id == id) || notebook.completed.find(todo => todo.id == id);
+				todo.title = title;
+				todo.content = content;
+				todo.ddl = ddl;
+				todo.manager = manager;
+				todo.reviewer = reviewer;
+				update('task');
+
+				close_window();
 			}
 		</script>
 	</div>
