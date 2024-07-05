@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<title>Power TODO</title>
+</head>
+<link rel="stylesheet" href="style.css" />
+
+<body>
+	<audio id="rp-sound"
+		src="data:audio/mpeg;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU2LjQwLjEwMQAAAAAAAAAAAAAA//tUwAAAAAAAAAAAAAAAAAAAAAAASW5mbwAAAA8AAAAlAAAcgAANDRQUFBoaGiEhKCgoLy8vNTU8PDxDQ0NKSkpQUFdXV15eXmVla2trcnJyeXmAgICGhoaNjY2UlJqamqGhoaior6+vtbW1vLzDw8PKysrQ0NDX197e3uXl5evr8vLy+fn5//8AAAAATGF2YzU2LjYwAAAAAAAAAAAAAAAAJAAAAAAAAAAAHIBaCpP5AAAAAAAAAAAAAAAAAAAA//tUxAADwAABpAAAACAAADSAAAAETEFMQU1FMy45OS41VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//tUxFWDwAABpAAAACAAADSAAAAEVVVMQU1FMy45OS41VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//tUxKoDwAABpAAAACAAADSAAAAEVVVMQU1FMy45OS41VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//tUxKoDwAABpAAAACAAADSAAAAEVVVMQU1FMy45OS41VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//tUxKoDwAABpAAAACAAADSAAAAEVVVMQU1FMy45OS41VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//tUxKoDwAABpAAAACAAADSAAAAEVVVMQU1FMy45OS41VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//tUxKoDwAABpAAAACAAADSAAAAEVVVMQU1FMy45OS41VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//tUxKoDwAABpAAAACAAADSAAAAEVVVMQU1FMy45OS41VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//tUxKoDwAABpAAAACAAADSAAAAEVVVMQU1F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">
+	</audio>
+
+	<div id="progressBar">
+		<span style="margin: 5px; float: left;">Progress</span>
+		<div
+			style="display: inline-block;width: calc(100% - 13em);height: 3px;margin-left: 10px;background: #bdd7ca;position: absolute;top: 50%;">
+			<div id="progress" style="background-color: rgb(1, 180, 171); width: 0; height: 100%;"></div>
+		</div>
+		<span id="progressNum" style="margin: 5px; float: right;">0/0 (0%)</span>
+	</div>
+	<div style="height: 3em;"><!-- 占位符 --></div>
+
+	<button onclick="_export()">Export</button>
+	<button onclick="show_window('import')">Import</button> |
+	<button onclick="rename_notebook()">Rename</button>
+	<button onclick="delete_notebook()">Delete</button>
+
+	<div class="tab" id="tab"></div>
+
+	<div id="todoTable">
+		<h2 style="cursor: pointer;" onclick="inc(this)"><span class="triangle-icon up"></span>InCompleted</h2>
+		<div id="incompBox"></div>
+		<hr>
+		<h2 style="cursor: pointer;" onclick="com(this)"><span class="triangle-icon down"></span>Completed</h2>
+		<div id="compBox"></div>
+	</div>
+
+	<div id="addtask" class="floatingBtn" onclick="show_window('addtask');">+</div>
+
+	<script>
+		/* init */
+		const VERSION = 2.0;
+		localStorage.todolist_v = VERSION;
+
+		if (!localStorage.todolist) {
+			localStorage.todolist = '{"notebook": [{"completed": [],"incompleted": [], "name": "Notebook 0"}]}';
+		}
+
+		var windows = [];
+
+		var todolist = JSON.parse(localStorage.todolist);
+		var CURRENT_NOTEBOOK = JSON.parse(localStorage.todolist).currNB || 0;
+
+		// use specified, cloud-based notebook
+		urlparam = window.location.href.split('?')[1]
+		if (urlparam) {
+			todolist = {
+				"notebook": [
+					{ name: urlparam, incompleted: [], completed: [] }
+				]
+			}
+			CURRENT_NOTEBOOK = 0;
+		}
+
+		var notebook = todolist.notebook[CURRENT_NOTEBOOK];
+
+		incompBox.show = true;
+		compBox.show = false;
+
+		const SITE_IP = "http://172.28.140.166:5001";
+		/* init completed */
+
+		// sync from cloud
+		async function sync_from_cloud() {
+			for (var i = 0; i < todolist.notebook.length; i++) {
+				var lst = todolist.notebook[i];
+
+				res = await sync('get', lst.name);
+
+				res.tasks.forEach(t => {
+					switch (t.status) {
+						case 0: // not-started
+						case 1: // incompleted
+							lst.incompleted.push(t);
+							break;
+						case 2: // completed
+							lst.completed.push(t);
+							break;
+					}
+				})
+			}
+
+			redraw();
+		}
+
+		sync_from_cloud();
+
+		function inc(t) {
+			console.log(t, t.children[0])
+			incompBox.show = !incompBox.show;
+			t.children[0].classList = "triangle-icon " + (incompBox.show ? "up" : "down");
+			update('task');
+		}
+
+		function com(t) {
+			compBox.show = !compBox.show;
+			t.children[0].classList = "triangle-icon " + (compBox.show ? "up" : "down");
+			update('task');
+		}
+
+		function update(part) {
+			localStorage.todolist = JSON.stringify(todolist);
+			redraw(part);
+		}
+
+		function sync(mode, data) {
+			switch (mode) {
+				case 'get':
+					var listName = data;
+					return new Promise((resolve, reject) => {
+						fetch(`${SITE_IP}/${listName}/getTasks`).then(res => resolve(res.json()))
+					})
+					break;
+				case 'add':
+					return new Promise((resolve, reject) => {
+						var title = data;
+						fetch(`${SITE_IP}/${notebook.name}/addTask`, {
+							method: 'POST',
+							headers: {
+								"Content-Type": "application/json",
+							},
+							body: JSON.stringify({
+								title: title,
+								content: "",
+								ddl: "",
+								manager: "",
+								reviewer: ""
+							})
+						}).then(res => resolve(res.json()))
+					})
+					break;
+				case 'modify':
+					fetch(`${SITE_IP}/${notebook.name}/updateTask`, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify({
+							id: data.id,
+							update: data.update
+						})
+					})
+					break;
+				case 'createList':
+					var listname = data
+					fetch(`${SITE_IP}/create/${listname}`)
+					break;
+			}
+		}
+
+		async function add(title) {
+			var res = await sync('add', title);
+
+			notebook.incompleted.push({
+				id: res.id,
+				title: title,
+				content: "",
+				status: 0,
+				ddl: "",
+				manager: "",
+				reviewer: ""
+			});
+			update('task');
+		}
+
+		function change_notebook(i) {
+			CURRENT_NOTEBOOK = i;
+			notebook = todolist.notebook[CURRENT_NOTEBOOK];
+			todolist.currNB = i;
+			update();
+			incompBox.show = true;
+			compBox.show = false;
+		}
+
+		function rename_notebook() {
+			var bookname = prompt("Rename Notebook:").trim();
+			if (!bookname) return;
+
+			notebook.name = bookname;
+			update('tab');
+		}
+
+		function delete_notebook() {
+			if (confirm("Confirm Delete?")) {
+				var deleted = todolist.notebook.splice(CURRENT_NOTEBOOK, 1)[0];
+				if (CURRENT_NOTEBOOK >= todolist.notebook.length)
+					change_notebook(todolist.notebook.length - 1);
+				console.log("delete", deleted);
+				update('tab');
+			}
+		}
+
+		function add_notebook() {
+			var bookname = prompt("Book Name:").trim();
+			if (!bookname) return;
+
+			todolist.notebook.push({
+				completed: [],
+				incompleted: [],
+				name: bookname
+			});
+			sync('createList', bookname);
+
+			change_notebook(todolist.notebook.length - 1);
+		}
+
+		function findpos(lst, id) {
+			var pos = 0;
+			for (pos = 0; pos < lst.length; pos++) {
+				var item = lst[pos];
+				if (item.id == id) {
+					return pos;
+				}
+			}
+			return -1
+		}
+
+		lastTime = -Infinity;
+
+		function task_incompleted(id) {
+			if (performance.now() - lastTime < 2000)
+				return false;
+			lastTime = performance.now();
+
+			var pos = findpos(notebook.incompleted, id);
+			var item = notebook.incompleted[pos]
+			notebook.incompleted.splice(pos, 1);
+			notebook.completed.push(item);
+
+			document.getElementById("rp-sound").play();
+			update('task');
+			sync('modify', {
+				"id": id,
+				"update": {
+					"status": 2
+				}
+			})
+		}
+
+		function task_completed(id) {
+			if (performance.now() - lastTime < 500)
+				return false;
+			lastTime = performance.now();
+
+			var pos = findpos(notebook.completed, id);
+			var item = notebook.completed[pos]
+			notebook.completed.splice(pos, 1);
+			notebook.incompleted.push(item);
+
+			document.getElementById("rp-sound").play();
+			update('task');
+			sync('modify', {
+				"id": id,
+				"update": {
+					"status": 0
+				}
+			})
+		}
+
+		function redraw(part) {
+			function _tab() {
+				tab.innerHTML = "";
+				for (var i = 0; i < todolist.notebook.length; i++) {
+					var bookname = todolist.notebook[i].name || "Notebook " + i;
+					if (i != CURRENT_NOTEBOOK)
+						tab.innerHTML += `<div class="card" onclick="change_notebook(${i})">${bookname}</div>`;
+					else
+						tab.innerHTML += `<div class="card focus">${bookname}</div>`;
+				}
+				tab.innerHTML += "<div class='card' onclick='add_notebook()'>+</div>"
+			}
+
+			function _task() {
+				compBox.innerHTML = "";
+				incompBox.innerHTML = "";
+
+				if (compBox.show) {
+					notebook.completed.forEach(todo => {
+						compBox.innerHTML += generate_task('#878190', todo.title, 'completed', todo.id);
+					})
+				}
+
+				if (incompBox.show) {
+					console.log(notebook)
+					notebook.incompleted.forEach(todo => {
+						incompBox.innerHTML += generate_task('#50b5e9', todo.title, 'incompleted', todo.id);
+					})
+				}
+
+				_progress();
+			}
+
+			function _progress() {
+				var completed_num = notebook.completed.length;
+				var total = notebook.incompleted.length + completed_num;
+				if (total < 0)
+					total = completed_num = 1;
+
+				progress.style.width = `${completed_num / total * 100}%`;
+				progressNum.innerText = `${completed_num}/${total} (${Math.round(completed_num / total * 100)}%)`;
+			}
+
+			function _global() {
+				_tab();
+				_task();
+			}
+
+			switch (part) {
+				case 'tab':
+					_tab();
+					break;
+				case 'task':
+					_task();
+					break;
+				case 'progress':
+					_progress();
+					break;
+				case undefined:
+				case 'all':
+					_global();
+					break;
+			}
+		}
+
+		function generate_task(color, content, className, id) {
+			var html = `
+				<div class="task ${className}">
+					<div class="left-control" style="background: ${color} !important">
+						<div class="task-control" onclick="task_${className}('${id}')">
+							<div class="svg-icon ${className}"><svg xmlns="http://www.w3.org/2000/svg"
+									viewBox="0 0 16 16">
+									<path
+										d="M6.54 13c-.3 0-.59-.13-.81-.35L2 8.75l1.62-1.69 2.86 2.98L12.26 3 14 4.56l-6.59 8.02c-.21.25-.51.4-.83.42h-.04z"
+										fill-rule="evenodd"></path>
+								</svg></div>
+						</div>
+					</div>
+					<div class="task-content">
+						<div class="justify-content-between">
+							<h3 class="task-title">
+								<p>${content}</p>
+							</h3>
+						</div>
+					</div>
+				</div>
+				`;
+			return html;
+		}
+
+		function _export() {
+			show_window('export');
+			// navigator.clipboard.writeText();
+			// document.body.innerHTML = `<textarea>${localStorage.todolist}</textarea>`;
+		}
+
+		window.onload = function () {
+			// close all windows.
+			windows = [
+				window_addtask,
+				window_import,
+				window_export,
+			]
+			close_window();
+		}
+	</script>
+
+	<!-- Window -->
+
+	<script>
+		function show_window(win) {
+			var w = document.getElementById('window_' + win);
+			w.style.display = "block";
+			document.body.style.overflow = "hidden";
+
+			(start_win[win] || console.log)();
+		}
+
+		var init_window = {};
+		var start_win = {};
+
+		function close_window(win) {
+			windows.forEach(w => w.style.display = "none");
+			document.body.style.overflow = "auto";
+
+			if (win) init_window[win]();
+		}
+	</script>
+	<style>
+		.window.container {
+			position: fixed;
+			top: 0;
+			left: 0;
+			z-index: 50000;
+			width: 100vw;
+			height: 100vh;
+			background-color: #11111188;
+			display: none;
+		}
+
+		.window.content {
+			width: calc(100vw - 50px);
+			height: calc(100vh - 50px);
+			border-radius: 10px;
+			background-color: #fff;
+			position: relative;
+			top: 15px;
+			left: 15px;
+			right: 15px;
+			padding: 10px;
+			overflow: auto;
+		}
+
+		.window.content>input {
+			border: none;
+			border-bottom: solid black 1px;
+			margin: 5px;
+			color: red;
+		}
+
+		.window.content>textarea {
+			width: 100%;
+			height: 400px;
+
+			white-space: pre-wrap;
+		}
+	</style>
+	<div id="window_addtask" class="window container">
+		<div class="window content">
+			<center>
+				<h1 style="margin: 0;">New Task</h1>
+			</center>
+			<h2>Iterator</h2>
+			for i in [
+			<input value="1" style="width: 2em;" id="window_addtask_iter1" /> ,
+			<input value="1" style="width: 2em;" id="window_addtask_iter2" />
+			]
+			<hr>
+			<h2>Task Template</h2>
+			<input value="Task $i" id="window_addtask_template">
+			<hr>
+			<h2>Preview</h2>
+			<div id="window_addtask_preview" style="border: solid 1px;"></div>
+			<div onclick="close_window('addtask')" class="floatingBtn" style="top: 50px;">×</div>
+			<div id="window_addtask_submit" class="floatingBtn">√</div>
+
+			<script>
+				function window_addtask_showPreview() {
+					var res = "";
+					var res2 = [];
+					var iter1 = Number(window_addtask_iter1.value);
+					var iter2 = Number(window_addtask_iter2.value);
+					var template = window_addtask_template.value;
+
+					for (var i = iter1; i <= iter2; i++) {
+						res += `<li>${template.replaceAll("$i", i)}</li>`;
+						res2.push(template.replaceAll("$i", i));
+					}
+
+					window_addtask_preview.innerHTML = res;
+					return res2;
+				}
+				window_addtask_showPreview();
+
+				window_addtask_iter1.oninput = window_addtask_showPreview;
+				window_addtask_iter2.oninput = window_addtask_showPreview;
+				window_addtask_template.oninput = window_addtask_showPreview;
+
+				window_addtask_submit.onclick = async function () {
+					var tasks = window_addtask_showPreview()
+					for (var i = 0; i < tasks.length; i++) {
+						await add(tasks[i]);
+					}
+					close_window('addtask');
+				}
+
+				init_window.addtask = function () {
+					window_addtask_iter1.value = "1";
+					window_addtask_iter2.value = "1";
+					window_addtask_template.value = "";
+					window_addtask_template.placeholder = "e.g. Task $1";
+					window_addtask_showPreview();
+				}
+			</script>
+		</div>
+	</div>
+	<div id="window_import" class="window container">
+		<div class="window content" id="wicontent">
+			<center>
+				<h1>Import Data</h1>
+			</center>
+			Import From File: <input type="file" onchange="window_import_loadfile(this.files[0])" />
+			<br>
+			<textarea placeholder="Data ..." id="window_import_data"></textarea>
+			<div onclick="close_window('import')" class="floatingBtn" style="top: 50px;">×</div>
+			<div onclick="window_import_import()" class="floatingBtn">√</div>
+		</div>
+
+		<script>
+			var barcode = null;
+			init_window.import = function () {
+				window_import_data.value = '';
+				barcode.cancel();
+				barcode.close();
+				barcode = null;
+			}
+
+			function window_import_loadfile(f) {
+				var reader = new FileReader();
+				reader.onload = function () {
+					window_import_data.value = reader.result;
+					window_import_import();
+				}
+				reader.onerror = function () {
+
+				}
+
+				reader.readAsText(f);
+			}
+
+			function window_import_import() {
+				var data = window_import_data.value;
+				if (!data) return false;
+
+				var method = data.substr(0, 2);
+				data = data.substring(2, data.length);
+				switch (method) {
+					case '{"': // import whole list in version 1
+						if (!confirm(
+							"These data is going to import a `TodoList`, which will overwrite all the current data. Do you really want to import?"
+						)) return false;
+						data = method + data;
+						data = JSON.parse(data);
+						todolist = data;
+					case '2A': // import a notebook
+						data = JSON.parse(data);
+						todolist.notebook.push(data);
+						break;
+					case '2B': // import the whole list
+						if (!confirm(
+							"These data is going to import a `TodoList`, which will overwrite all the current data. Do you really want to import?"
+						)) return false;
+						data = JSON.parse(data);
+						todolist = data;
+						break;
+				}
+				localStorage.todolist = JSON.stringify(todolist);
+				window.location.reload();
+			}
+		</script>
+	</div>
+	<div id="window_export" class="window container">
+		<div class="window content">
+			<center>
+				<h1>Export Data</h1>
+			</center>
+			<button onclick="window_export_single()">Export Current Notebook</button>
+			<button onclick="window_export_list()">Export The Whole List</button>
+			<textarea placeholder="Please select the export method." id="window_export_data"></textarea>
+			<div onclick="close_window('export')" class="floatingBtn" style="top: 50px;">×</div>
+			<style>
+				#window_export>button {
+					width: 10vw;
+				}
+			</style>
+		</div>
+
+		<script>
+			init_window.export = function () {
+				window_export_data.value = '';
+			}
+
+			function window_export_single() {
+				var ex_data = "2A" + JSON.stringify(notebook);
+				// json data
+				window_export_data.value = ex_data;
+				new QRCode(window_export_qr, ex_data);
+			}
+
+			function window_export_list() {
+				var ex_data = "2B" + JSON.stringify(todolist);
+				// json data
+				window_export_data.value = ex_data;
+			}
+		</script>
+	</div>
+</body>
+
+</html>
