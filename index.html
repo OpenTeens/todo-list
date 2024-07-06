@@ -79,7 +79,8 @@
 		incompBox.show = true;
 		compBox.show = false;
 
-		const SITE_IP = "http://112.124.53.16:5001";
+		const PROTOCAL = window.location.href.split(':')[0].toUpperCase();
+		const SITE_IP = `${PROTOCAL}://112.124.53.16:5001`;
 		/* init completed */
 
 		// sync from cloud
