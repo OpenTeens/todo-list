@@ -64,7 +64,7 @@
 		var CURRENT_NOTEBOOK = JSON.parse(localStorage.todolist).currNB || 0;
 
 		// use specified, cloud-based notebook
-		urlparam = window.location.href.split('?')[1]
+		urlparam = window.location.href.split('?')[1].split(/[^a-zA-Z_]/g)[0];
 		if (urlparam) {
 			todolist = {
 				"notebook": [
