@@ -153,6 +153,7 @@
 				case 'modify':
 					fetch(`${SITE_IP}/${notebook.name}/updateTask`, {
 						method: 'POST',
+						credentials: 'include',
 						headers: {
 							'Content-Type': 'application/json'
 						},
